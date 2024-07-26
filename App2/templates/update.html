@@ -1,0 +1,55 @@
+{% extends 'root.html' %} 
+{% block content %}
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center align-item-center mt-5 mw-75">
+            <div class="d-flex g-3 flex-column w-50">
+                {% if message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                    </div>
+                    {% endif %}
+                <h2>Update Post</h2>
+                    <form method="post" class="row g-3">
+                        {% csrf_token %} 
+                        <div class="col-md-5">
+                            {{ form.title.label_tag }}
+                            <input class="form-control    {% if form.title.errors%} is-invalid{% endif %} " id="title" name="title" value='{{ form.instance.title }}'>
+                            {% if form.title.errors%}
+                            <div class="invalid-feedback" role="alert">
+                                {{ form.title.errors.as_text }}
+                                </div>
+                                {% endif %}
+                        </div>
+                        <div class="col-md-5">
+                            {{ form.category.label_tag }}
+                            <select class="form-select  {% if form.category.errors%} is-invalid{% endif %}" id="category" name="category">
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}" {% if cat.id == form.instance.category.id %} selected{% endif %}>{{ cat.name }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-5 ">
+                            {{ form.img_url.label_tag }} 
+                                {% if form.instance.img_url %}
+                                    <img src='{{ form.instance.img_url }}' class="rounded-circle" alt="Post Image" width="50" height="50">
+                                {% endif %}
+                        </div>
+                        <div class="col-md-5">
+                            <input class="form-control  {% if form.img_url.errors%} is-invalid{% endif %} " type="text" name="img_url" value='{{form.instance.img_url }}'>
+                        </div>
+                        <div class="col-md-10">
+                            {{ form.content.label_tag }} 
+                            <textarea
+                            class="form-control {% if form.content.errors%} is-invalid{% endif %} "
+                            id="content"
+                            name="content"
+                            rows="3"
+                            >{{form.instance.content}}</textarea>
+                        </div>
+                        <div class="col-12 mx-auto w-50">
+                            <button type="submit" class="btn btn-primary">Save changes</button></div>
+                    </form>
+            </div>
+    </div>
+</div>
+{% endblock %} 

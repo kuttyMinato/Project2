@@ -1,0 +1,78 @@
+{% extends 'root.html' %} {% block content%}
+<div class="container-fluid">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="d-flex g-3 flex-column w-50">
+      <h3>Add Post</h3>
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        <div class="col-md-6">
+          <label for="Title" class="form-label">Title <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+            id="title"
+            name="title"
+          />
+          {% if form.title.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.title.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+        </div>
+        <div class="col-md-6">
+          <label for="category" class="form-label">Category <span class="text-danger"> *</span></label>
+          <select
+            class="form-select {% if form.category.errors %}is-invalid{% endif %}"
+            id="category"
+            name="category"
+          >
+            <option value="" disbled>Select a Category</option>
+            {% for category in category %}
+            <option value="{{category.id}}">{{category.name}}</option>
+            {% endfor %}
+          </select>
+          {% if form.category.errors %}
+          <div class="invalid-feedback">{% for error in form.category.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}</div>
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <label for="image" class="form-label">image <span class="text-danger"> *</span></label>
+          <input
+            type="text"
+            class="form-control {% if form.img_url.errors %}is-invalid{% endif %}"
+            id="img_url"
+            name="img_url"
+          />
+          {% if form.img_url.errors %}
+          <div class="invalid-feedback">{% for error in form.img_url.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}</div>
+          {% endif %}
+        </div>
+        <div class="col-md-12">
+          <label for="Content" class="form-label">Content <span class="text-danger">*</span></label>
+          <textarea
+            class="form-control {% if form.content.errors %}is-invalid{% endif %}"
+            id="content"
+            name="content"
+            rows="3"
+          ></textarea>
+          {% if form.content.errors %}
+          <div class="invalid-feedback">{% for error in form.content.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}</div>
+          {% endif %}
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-dark">Add Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
