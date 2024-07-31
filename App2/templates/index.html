@@ -1,9 +1,27 @@
-{% extends 'root.html' %} {% block content%}
+{% extends 'root.html' %}
 
+{% block content %}
+
+<h2>INDEX</h2>
 <div class="container-fluid">
-  <div class="row m-3">
+    <a href="add">Add</a>
+    <div class="row">
+        {% if all_post %} {% for all in all_post %}
+        <div class="column">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h5>{{all.title}}</h5>
+                        <p>{{all.content}}</p>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
-  </div>
 </div>
 
 {% endblock %}
